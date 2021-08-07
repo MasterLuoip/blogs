@@ -42,3 +42,62 @@ module.exports = {
 
   
 
+## Webpack Plugins
+
+Webpack plugin is a Javascript object with an apply method. This apply method is called by the webpack compiler, giving the access to the entire compilation lifecycle. A plugin is complimentary to a loader. 
+
+#### Webpack optimization
+
+```javascript
+optimization: {
+  minimize: true,
+  minimizer: [
+    // ...plugins
+  ]
+},
+```
+
+Optimazition is a webpack property has `minize` property. When it triggers, all plugins inside `minimizer` will be triggered.
+
+* **Terser webpack plugin** minimised the application JavasScript bundle file for production. It is used in tree shaking. Webpack v5 comes with this plugin out of the box.
+* **DllPlugin/DllReferencePlugin** stands for Dynamic-link library. Spliting the bundles in a way that can drastically improve build time.
+* **CssMinimizerWebpackPlugin** optimise and **minify** CSS with [cssnano](https://cssnano.co/)
+
+* **HtmlWebpackPlugin** It uses lodash templates or provided ones to create html file and include this html file to all bundles file
+
+  E.g. 
+
+  ```html
+  <--dist/index.html-->
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <meta charset="UTF-8" />
+      <title>webpack App</title>
+    </head>
+    <body>
+      <script src="index_bundle.js"></script>
+    </body>
+  </html>
+  ```
+
+* **DefinePlugin** allows you to define variable with code. This is useful when you need a global variable to distinguish enviroment and production mode.
+
+  ```js
+  new webpack.DefinePlugin({
+    PRODUCTION: JSON.stringify(true),
+    VERSION: JSON.stringify('5fa3b9'),
+    BROWSER_SUPPORTS_HTML5: true,
+    TWO: '1+1',
+    'typeof window': JSON.stringify('object'),
+    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+  });
+  // Now in your code, you can check access VERSION	 
+  ```
+
+*  **HotModuleReplacementPlugin** enables Hot Module Replacement (HMR)
+
+* **SplitChunksPlugin** Code splitting feature. A splited chunk can be shared among bundle files
+
+## Case Study: Create-react-app
+
